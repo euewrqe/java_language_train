@@ -1,0 +1,24 @@
+/*
+     * 
+     * interface IFoo{
+     *      void myMethod();
+     * }
+     * class Foo implement IFoo{
+     *   public void myMethod(){
+     *      system.out.println("myMethod")
+     *   }
+     * }
+     *
+     * InvocationHandler handler = new MyInvocationHandler();
+     * create a proxy
+     * 1，获取代理类
+     * Class<?> proxyClass = Proxy.getProxyClass(Foo.class.getClassLoader(), Foo.class)
+     * 2, 
+     * Foo f = (Foo)proxyClass.getConstuctor(InvocationHandler.class).newInstance(handler);
+     * 
+     * class MyInvocationHandler extends InvocationHandler{
+     *   invoke(Object proxy, Method method, Object[] args){
+     *      method(foo, args);
+     *   }
+     * }
+     * */
