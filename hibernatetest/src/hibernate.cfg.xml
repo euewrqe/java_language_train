@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+  "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+  <!-- 配置sessionFactory,用来创建session, session用来操作数据库的
+    以上xml都配置完后，只要save一个表的对象就完成写入，相关的操作还有update()
+    delete()等。
+    session.save()
+   -->
+  <session-factory>
+    <!-- 1，配置数据库 -->
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/hibernate_orm_test</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">123456</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property> 
+    <!-- 方言dialect
+      方言会在sql尾部加上type=Innodb, mysql5的语法是engine=Innodb
+      MySQLDialect改为 MySQL5Dialect或MySQL55Dialect
+      
+      如果要显示外键关系必须是InnoDB, 对应类名:MySQL5InnoDBDialect
+     -->
+    
+    <!-- 2，可选配置 -->
+    <property name="hibernate.show_sql">true</property> <!-- 是否显示sql -->
+    <property name="hibernate.format_sql">true</property> <!-- 是否格式化sql -->
+    <property name="hibernate.hbm2ddl.auto">create-drop</property><!-- 配置hibernate的DDL语句的生成方式 -->
+    <!-- 
+    hbm2ddl的值可以是: update, create, create-drop, validate
+    update表示hibernate匹配数据库表结构，如果不匹配，就更新
+    create表示如果没有就创建
+     -->
+    
+    <!-- 
+    结构化查询语言:
+    DDL Data Definision Language 数据定义语言
+    DML：Data Manipulation Language  数据操纵语言
+    DQL: Database Query Language    数据查询语言
+    DCL: Database Control Language  数据控制语言，权限grant, revoke
+    CCL: Cursor Control Language   游标控制语句，
+    TPL: Transection Processing language: 事务处理语言: begin, commit, callback
+     -->
+    
+    <!-- 3，链接数据表映射关系 -->
+    <mapping resource="com/lxy/many2many/Role.hbm.xml" />
+    <mapping resource="com/lxy/many2many/User.hbm.xml" />
+  </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- com.lxy.many2many.User配置文件 -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.lxy.many2many">
+  <!-- 配置User映射关系 -->
+  <class name="User" table="m2m_user">
+    <id name="userId" column="user_id">
+      <generator class="native"></generator>
+    </id>
+    <property name="userName" column="user_name"></property>
+    <property name="userPassword" column="user_password"></property>
+    <property name="userEmail" column="user_email"></property>
+    
+    <!-- 
+  配置多对多映射关系:
+    set: 用于映射集合字段和表结构名字
+      set映射集合， list: list映射集合, array: array映射集合
+      - table: 中间表的名字
+        key: 映射该表在对方表中的外键字段
+          column: 当前表在中间表中的外键字段
+        many-to-many: 映射多对多关系
+          column:  对方表在中间表的外键字段
+          
+   -->
+    <set name="roles" table="m2m_user_role_ref">
+      <key column="user_id"></key>
+      <many-to-many column="role_id" class="Role"></many-to-many>
+    </set>
+    
+  </class>
+  
+  
+   
+</hibernate-mapping>

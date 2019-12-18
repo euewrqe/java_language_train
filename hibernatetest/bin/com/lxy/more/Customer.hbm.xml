@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- com.lxy.more.Customer配置文件 -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.lxy.more">
+  <!-- 配置Customer映射关系 -->
+  <class name="Customer" table="customer">
+    <!-- 设置id -->
+    <id name="custId" column="cust_id">
+    <!-- 指定主键的生成方式 
+    native使用本地数据库的增长能力，根据情况利用数据库自增长能力
+    -->
+      <generator class="native"></generator>
+    </id>
+    <property name="custName" column="cust_name" unique="false" not-null="true" length="10"></property>
+    <property name="custSource" column="cust_source"></property>
+    <property name="custIndustry" column="cust_industry"></property>
+    <property name="custLevel" column="cust_level"></property>
+    <property name="custAddress" column="cust_address"></property>
+    <property name="custPhone" column="cust_phone"></property>
+
+    <!-- 
+      一对多关系配置， 当前表为主表，从表的对象集合
+      set标签
+      name: 从表集合的对象字段 
+      table: 从表的数据表名字
+      inverse: 在save保存的时候是否关心set集合的对象，false表示关心，true表示不关心
+      cascade: 级联操作,save-update先保存再更新
+      
+      在删除操作的时候，如果是删除从表，单表删除
+      如果是删除主表，需要查看是否有从表数据关联，
+      有引用: 如果外键字段可以为null, hibernate把关联需要删除表的记录的外键变为null
+      如果不为null, 删除时需要级联操作(级联删除) cascade=delete, save-update
+      没有引用: 单表删除
+      联查:
+      customer.getLinkMans()
+      linkman.getCustomer()
+      一对多，一的一方查多的一方需要延迟加载  lazy=true
+      多对一，多的一方查一的一方立即加载  lazy=false
+     -->
+
+     <set name="linkmans" table="linkman" inverse="false" cascade="save-update" lazy="true">
+        
+        <key column="lkm_cust_id"></key>
+        <one-to-many class="LinkMan"/>
+     </set>
+  </class>
+</hibernate-mapping>

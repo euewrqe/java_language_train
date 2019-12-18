@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- com.lxy.more.LinkMan配置文件 -->
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.lxy.more">
+  <!-- 
+  配置LinkMan映射关系
+  class标签的lazy指定load的时候是延迟加载还是实时加载
+-->
+
+  <class name="LinkMan" table="linkman" lazy="true">
+    <!-- 设置id -->
+    <id name="lkmId" column="lkm_id">
+    <!-- 指定主键的生成方式 
+    native使用本地数据库的增长能力，根据情况利用数据库自增长能力
+    -->
+      <generator class="native"></generator>
+    </id>
+    <property name="lkmName" column="lkm_name"></property>
+    <property name="lkmGender" column="lkm_gender"></property>
+    <property name="lkmPhone" column="lkm_phone"></property>
+    <property name="lkmMobile" column="lkm_mobile"></property>
+    <property name="lkmEmail" column="lkm_email"></property>
+    <property name="lkmPosition" column="lkm_position"></property>
+    <property name="lkmMemo" column="lkm_memo"></property>
+    
+    <!-- 
+      配置多对一， many-to-one
+      name: 当前表的主表对象字段
+      class: 主表的实体类
+      column: 指定从表的外键字段
+      
+      多对一，多的一方查一的一方立即加载  lazy=false
+     -->
+     <many-to-one name="customer" class="Customer" column="lkm_cust_id" lazy="false"></many-to-one>
+
+  </class>
+</hibernate-mapping>
